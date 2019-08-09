@@ -1,0 +1,6 @@
+<div class="container">
+    <h1>Departments<a href="create-dept"><i class="material-icons align-middle" style="font-size:35px;color:red;">add</i></a></h1>
+    <div *ngFor="let dept of depts">
+        <a [routerLink]="['/edit-dept/', dept.id]" >{{ dept.dept_name }}</a>
+    </div>
+</div>
