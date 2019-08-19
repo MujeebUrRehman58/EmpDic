@@ -1,0 +1,79 @@
+<div *ngIf=(error)>
+    {{error}}
+</div>
+<br>
+<div class="container">
+    <form [formGroup]="editEmpForm" (ngSubmit)="onSubmit(editEmpForm.value)">
+        <label for="fname">Full name</label>
+        <br>
+        <input id="fname" type="text" [(ngModel)]='oldname' formControlName="full_name" [value]='oldname' required>
+        <br>
+        <label for="uname">Username</label>
+        <br>
+        <input id="uname" type="text" [(ngModel)]='olduname' formControlName="username" [value]='olduname' required>
+        <br>
+        <label for="title">Title</label>
+        <br>
+        <input id="title" type="text" [(ngModel)]='oldtitle' formControlName="title" [value]='oldtitle' required>
+        <br>
+
+        <label for="level">Level</label>
+        <br>
+        <select id="level" formControlName="level" [(ngModel)]='oldlevel'>
+            <option [selected]="true">{{ oldlevel }}</option>
+            <option>Employee</option>
+            <option>Admin</option>
+        </select>
+        <br>
+
+        <label for="dept">Department</label>
+        <br>
+        <select id="dept" formControlName="dept" [(ngModel)]='olddept'>
+            <option *ngFor="let dept of depts" [selected]="dept.id == mem.dept">{{ dept.dept_name }}</option>
+        </select>
+        <br>
+
+        <label for="address">Address</label>
+        <br>
+        <input id="address" type="text" [(ngModel)]='oldaddress' formControlName="address" [value]='oldaddress' required>
+        <br>
+
+        <label for="email">Email</label>
+        <br>
+        <input id="email" type="email" [(ngModel)]='oldemail' formControlName="email" [value]='oldemail' required>
+        <br>
+        <label for="work">Work phone</label>
+        <br>
+        <input id="work" type="tel" [(ngModel)]='oldwork' formControlName="work_phone" [value]='oldwork' ngModel pattern="\+?1?\d{9,15}" required>
+        <br>
+
+        <label for="home">Home phone</label>
+        <br>
+        <input id="home" type="tel" [(ngModel)]='oldhome' formControlName="home_phone" [value]='oldhome' ngModel pattern="\+?1?\d{9,15}" required>
+        <br>
+
+        <label for="cell">Cell phone</label>
+        <br>
+        <input id="cell" type="tel" [(ngModel)]='oldcell' formControlName="cell_phone" [value]='oldcell' ngModel pattern="\+?1?\d{9,15}" required>
+        <br>
+        <label for="check">Man of month</label>
+        <input type="checkbox" id='check' [checked]="oldman" [(ngModel)]="oldman" formControlName="manOfMonth" />
+        <br>
+        <label for="image">Profile(optional)</label>
+        <img src="{{ oldprofile }}" height="30">
+        <input id="image" formControlName="profile" type="file" [(ngModel)]="newprofile" />
+        <br><br>
+        <div class="form-row">
+            <div class="form-group col-md-1">
+                <button [disabled]="!editEmpForm.valid" class="btn btn-primary" type="submit">Update</button>
+            </div>
+            <div class="form-group col-md-1">
+                <button class="btn btn-primary" (click)="onSubmit('delete')" type="button"
+                    onclick="return confirm('Are you sure you want to delete this member?');">Delete</button>
+            </div>
+            <div class="form-group col-md-1">
+                <button class="btn btn-primary" (click)="onSubmit('cancel')" type="button">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>

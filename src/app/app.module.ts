@@ -14,7 +14,7 @@ import { MembersComponent } from './members/members.component';
 import { EditDeptComponent } from './edit-dept/edit-dept.component';
 import { CreateDeptComponent } from './create-dept/create-dept.component';
 import { CreateEmpComponent } from './create-emp/create-emp.component';
-import { UpdateEmpComponent } from './update-emp/update-emp.component';
+import { EditEmpComponent } from './edit-emp/edit-emp.component';
 
 
 @NgModule({
@@ -28,7 +28,7 @@ import { UpdateEmpComponent } from './update-emp/update-emp.component';
     EditDeptComponent,
     CreateDeptComponent,
     CreateEmpComponent,
-    UpdateEmpComponent,
+    EditEmpComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,10 +39,11 @@ import { UpdateEmpComponent } from './update-emp/update-emp.component';
     RouterModule.forRoot([
       { path: 'home', component: HomeComponent },
       { path: 'administration', component: AdministrationComponent },
-      { path: 'emp-details', component: EmpDetailsComponent },
+      { path: 'emp-details/:id', component: EmpDetailsComponent },
       { path: 'members', component: MembersComponent },
       { path: 'departments', component: DepartmentsComponent },
       { path: 'edit-dept/:id', component: EditDeptComponent },
+      { path: 'edit-emp/:id', component: EditEmpComponent },
       { path: 'create-dept', component: CreateDeptComponent },
       { path: '', redirectTo: '/home', pathMatch: 'full' },
     ]),

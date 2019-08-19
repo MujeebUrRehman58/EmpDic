@@ -9,7 +9,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let emp of emps" style="cursor: pointer;">
+      <tr *ngFor="let emp of emps" (ng-click)="go(emp.id)" style="cursor: pointer;">
         <td>{{ emp.full_name }}</td>
         <td>{{ emp.title }}</td>
         <td>{{ emp.email }}</td>

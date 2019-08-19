@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from '../data.service'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-members',
@@ -6,10 +8,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./members.component.css']
 })
 export class MembersComponent implements OnInit {
-
-  constructor() { }
+  mems: any;
+  constructor(
+    private dataService: DataService,
+    private router: Router,
+  ) { }
 
   ngOnInit() {
+    let res = this.dataService.getemps();
+    res.subscribe((data) => this.mems = data);
   }
 
 }

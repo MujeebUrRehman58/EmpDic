@@ -31,15 +31,16 @@ export class EditDeptComponent implements OnInit {
   ngOnInit() {
   }
 
-  update(name) {
-    this.dataService.patchdept(this.id, name);
-    this.router.navigate(['/administration'])
-  }
-  delete(name) {
-    this.dataService.deletedept(this.id);
-    this.router.navigate(['/administration'])
-  }
-  cancel(name) {
-    this.router.navigate(['/administration'])
+  onSubmit(value){
+    if (value == 'cancel') {
+      this.router.navigate(['/administration'])
+    }
+    else if (value == 'delete') {
+      this.dataService.deletedept(this.id);
+      this.router.navigate(['/administration'])
+    } else {
+      this.dataService.patchdept(this.id, value);
+      this.router.navigate(['/administration'])
+    }
   }
 }

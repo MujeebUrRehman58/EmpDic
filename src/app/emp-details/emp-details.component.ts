@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from '../data.service'
+import { DataService } from '../data.service';
+import { ActivatedRoute} from '@angular/router';
 
 
 @Component({
@@ -9,11 +10,17 @@ import { DataService } from '../data.service'
 })
 export class EmpDetailsComponent implements OnInit {
   emp : any;
-  constructor(private dataService: DataService,) { }
+  id : any;
+  constructor(private dataService: DataService,
+    private route: ActivatedRoute,
+    ) {
+    this.id = this.route.snapshot.paramMap.get('id');
+   }
 
   ngOnInit() {
-    let res = this.dataService.getempbyid(1);
+    let res = this.dataService.getempbyid(this.id);
     res.subscribe((data) => this.emp = data);
   }
+
 
 }
