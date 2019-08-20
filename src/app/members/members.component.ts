@@ -16,7 +16,7 @@ export class MembersComponent implements OnInit {
 
   ngOnInit() {
     let res = this.dataService.getemps();
-    res.subscribe((data) => this.mems = data);
+    res.then((data) => this.mems = data);
   }
 
 }

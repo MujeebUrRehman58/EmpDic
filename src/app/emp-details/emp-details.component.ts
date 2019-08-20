@@ -19,7 +19,7 @@ export class EmpDetailsComponent implements OnInit {
 
   ngOnInit() {
     let res = this.dataService.getempbyid(this.id);
-    res.subscribe((data) => this.emp = data);
+    res.then((data) => this.emp = data);
   }
 
 

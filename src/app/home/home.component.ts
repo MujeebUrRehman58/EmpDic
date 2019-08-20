@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     let res = this.dataService.getemps();
-    res.subscribe((data) => this.emps = data);
+    res.then((data) => this.emps = data);
   }
   go(id) {
     console.log('redirecting')

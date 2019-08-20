@@ -7,28 +7,28 @@ import { HttpClient } from '@angular/common/http';
 export class DataService {
   constructor(private http: HttpClient,) { }
 
-  getusers(){
-    return this.http.get("http://127.0.0.1:8000/api/users");
+  async getusers(){
+    return await this.http.get("http://127.0.0.1:8000/api/users").toPromise();
   }
-  getuserbyid(id){
-    return this.http.get("http://127.0.0.1:8000/api/users/" + id + '/');
+  async getuserbyid(id){
+    return await this.http.get("http://127.0.0.1:8000/api/users/" + id + '/').toPromise();
   }
   patchuser(id, username){
     this.http.patch("http://127.0.0.1:8000/api/users/" + id + '/', username).subscribe((res: Response) => {console.log(res);})
   }
-  getemps(){
-    return this.http.get("http://127.0.0.1:8000/api/employees");
+  async getemps(){
+    return await this.http.get("http://127.0.0.1:8000/api/employees").toPromise();
   }
-  getempbyid(id){
-    return this.http.get("http://127.0.0.1:8000/api/employees/" + id + '/');
-  }
-
-  getdepts(){
-    return this.http.get("http://127.0.0.1:8000/api/departments");
+  async getempbyid(id){
+    return await this.http.get("http://127.0.0.1:8000/api/employees/" + id + '/').toPromise();
   }
 
-  getdeptbyid(id){
-    return this.http.get("http://127.0.0.1:8000/api/departments/" + id + '/');
+  async getdepts(){
+    return await this.http.get("http://127.0.0.1:8000/api/departments").toPromise();
+  }
+
+  async getdeptbyid(id){
+    return await this.http.get("http://127.0.0.1:8000/api/departments/" + id + '/').toPromise();
   }
 
   postdept(name){
@@ -49,5 +49,11 @@ export class DataService {
 
   deleteemp(id){
     return this.http.delete("http://127.0.0.1:8000/api/employees/" + id + '/').subscribe((res: Response) => {console.log(res);})
+  }
+  set_manofmonth(){
+    return this.http.get("http://127.0.0.1:8000/api/employees/set_manofmonth/").subscribe((res: Response) => {console.log(res);})
+  }
+  userexists(username){
+    return this.http.post("http://127.0.0.1:8000/api/users/userexists/", {'username':username})
   }
 }

@@ -21,7 +21,7 @@ export class EditDeptComponent implements OnInit {
       dept_name: '',
     });
     this.id = this.route.snapshot.paramMap.get('id');
-    this.dataService.getdeptbyid(this.id).subscribe((dept) => {
+    this.dataService.getdeptbyid(this.id).then((dept) => {
       console.log(dept);
       this.oldname = dept['dept_name']
     });

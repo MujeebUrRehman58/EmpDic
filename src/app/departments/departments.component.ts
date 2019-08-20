@@ -12,7 +12,7 @@ export class DepartmentsComponent implements OnInit {
 
   ngOnInit() {
     let res = this.dataService.getdepts();
-    res.subscribe((data) => this.depts = data);
+    res.then((data) => this.depts = data);
   }
 
 }
