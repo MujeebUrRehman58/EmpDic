@@ -53,7 +53,17 @@ export class DataService {
   set_manofmonth(){
     return this.http.get("http://127.0.0.1:8000/api/employees/set_manofmonth/").subscribe((res: Response) => {console.log(res);})
   }
-  userexists(username){
-    return this.http.post("http://127.0.0.1:8000/api/users/userexists/", {'username':username})
+  userexists(data){
+    return this.http.post("http://127.0.0.1:8000/api/users/userexists/", data)
+  }
+  getdeptbyname(data){
+    console.log(data)
+    return this.http.post("http://127.0.0.1:8000/api/departments/getdeptbyname/", data)
+  }
+  postemp(data){
+    return this.http.post("http://127.0.0.1:8000/api/employees/", data).subscribe((res: Response) => {console.log(res);})
+  }
+  postuser(data){
+    return this.http.post("http://127.0.0.1:8000/api/users/", data)
   }
 }

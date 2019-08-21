@@ -45,6 +45,7 @@ import { EditEmpComponent } from './edit-emp/edit-emp.component';
       { path: 'edit-dept/:id', component: EditDeptComponent },
       { path: 'edit-emp/:id', component: EditEmpComponent },
       { path: 'create-dept', component: CreateDeptComponent },
+      { path: 'create-emp', component: CreateEmpComponent },
       { path: '', redirectTo: '/home', pathMatch: 'full' },
     ]),
 

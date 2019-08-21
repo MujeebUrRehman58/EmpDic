@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { DataService } from '../data.service'
 import { ActivatedRoute, Router } from '@angular/router';
+import {Department} from '../models/dept'
 
 @Component({
   selector: 'app-edit-dept',
@@ -10,27 +10,21 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class EditDeptComponent implements OnInit {
   editDeptForm;
-  id;
-  oldname;
-  constructor(private formBuilder: FormBuilder,
+  id: any
+  dept: any = Department
+  constructor(
     private dataService: DataService,
     private route: ActivatedRoute,
     private router: Router,
   ) {
-    this.editDeptForm = this.formBuilder.group({
-      dept_name: '',
-    });
     this.id = this.route.snapshot.paramMap.get('id');
     this.dataService.getdeptbyid(this.id).then((dept) => {
       console.log(dept);
-      this.oldname = dept['dept_name']
+      this.dept = dept
     });
-
   }
-
   ngOnInit() {
   }
-
   onSubmit(value){
     if (value == 'cancel') {
       this.router.navigate(['/administration'])

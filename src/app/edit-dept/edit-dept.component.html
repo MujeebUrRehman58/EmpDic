@@ -1,14 +1,14 @@
 <div class="container">
-    <form [formGroup]="editDeptForm" (ngSubmit)="onSubmit(editDeptForm.value)">
+    <form #editDeptForm="ngForm" (ngSubmit)="onSubmit(editDeptForm.value)">
         <label for="dept_name">
             Department
         </label>
         <br>
-        <input id="dept_name" type="text" formControlName="dept_name" [value]='oldname'>
+        <input name="dept_name" type="text" [(ngModel)]='dept.dept_name' required>
         <br><br>
         <div class="form-row">
             <div class="form-group col-md-1">
-                <button class="btn btn-primary" type="submit">Update</button>
+                <button [disabled]="!editDeptForm.valid" class="btn btn-primary" type="submit">Update</button>
             </div>
             <div class="form-group col-md-1">
                 <button class="btn btn-primary" (click)="onSubmit('delete')" type="button"

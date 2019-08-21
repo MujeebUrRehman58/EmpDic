@@ -3,11 +3,7 @@ import { DataService } from '../data.service'
 import { ActivatedRoute, Router } from '@angular/router';
 import { Employee } from '../models/emp'
 import { User } from '../models/user'
-import {Department} from '../models/dept'
-import { NgForm } from '@angular/forms';
-import { emptyScheduled } from 'rxjs/internal/observable/empty';
-
-
+import { Department } from '../models/dept'
 
 @Component({
   selector: 'app-edit-emp',
@@ -16,32 +12,30 @@ import { emptyScheduled } from 'rxjs/internal/observable/empty';
 })
 
 export class EditEmpComponent implements OnInit {
-  editEmpForm;
+  regx = "^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$"; 
   levels = ['Admin', 'Employee'];
   titles = ['Director', 'Sr. Developer', 'Jr. Developer', 'Software Engineer', 'Intern'];
-  regx = "\+?1?\d{9,15}";
+  fileToUpload: File = null;
   id: any;
   mem: any = Employee
   user: any = User
   dept: any = Department
   depts: any;
-  users: any;
-  emps: any
   error: any
-
+  
   constructor(
     private dataService: DataService,
     private route: ActivatedRoute,
     private router: Router,
   ) {
-    
+
     this.id = this.route.snapshot.paramMap.get('id');
     this.dataService.getempbyid(this.id).then((emp) => {
       this.mem = emp;
       this.dataService.getdeptbyid(this.mem.dept).then((d) => {
         this.dept = d;
       });
-      
+
     });
     this.dataService.getuserbyid(this.id).then((u) => {
       this.user = u;
@@ -49,42 +43,47 @@ export class EditEmpComponent implements OnInit {
     this.dataService.getdepts().then((d) => {
       this.depts = d;
     });
-    
-    this.dataService.getusers().then((u) => {
-      this.users = u;
-    })
-    
-    this.dataService.getemps().then((e) => {
-      this.emps = e;
-    })
   }
-  
+
   ngOnInit() {
   }
-  usernameExists(username){
-    this.dataService.userexists(username).subscribe((res: Response) => {
-      console.log(res);
-      if(res.status){
-        return true
-      }
-      return false
+  usernameExists() {
+    this.dataService.userexists({ 'username': this.user.username, 'id': this.id }).subscribe((res: Response) => {
+      if(res.status)
+        this.error = 'Username already taken.'
+      else
+        this.error = null
     })
   }
-  onSubmit(form: NgForm) {
-    // console.log(value);
-    // if (value == 'cancel') {
-    //   this.router.navigate(['/administration'])
-    // }
-    // else if (value == 'delete') {
-    //   this.dataService.deleteemp(this.id);
-    //   this.router.navigate(['/administration'])
-    // } else {
-      console.log(form.value)
-      if(this.mem.manOfMonth)
-        this.dataService.set_manofmonth()
-      // this.dataService.patchemp(this.id, value);
-      // this.dataService.patchuser(this.id, { 'username': value['username'] })
-      // this.router.navigate(['/administration'])
-    // }
+  handleFileInput(files: FileList) {
+    this.fileToUpload = files.item(0);
+}
+  onSubmit(value) {
+    //console.log(value)
+    if (value == 'cancel') {
+      this.router.navigate(['/administration'])
+    }
+    else if (value == 'delete') {
+      this.dataService.deleteemp(this.id);
+      this.router.navigate(['/administration'])
+    } 
+    else {
+      this.dataService.getdeptbyname({'dept_name':value.dept}).subscribe((res: Response) => {
+        value.dept = res
+        if (this.mem.manOfMonth)
+          this.dataService.set_manofmonth()
+        this.dataService.patchuser(this.id, { 'username': value.username })
+        if (this.fileToUpload){
+          const formData: FormData = new FormData();
+          formData.append('profile', this.fileToUpload, this.fileToUpload.name);
+          this.dataService.patchemp(this.id, formData)
+          this.dataService.patchemp(this.id, value)
+          this.router.navigate(['/administration'])  
+        }
+        else
+          this.dataService.patchemp(this.id, value)
+          this.router.navigate(['/administration'])  
+      })
+    }
   }
 }

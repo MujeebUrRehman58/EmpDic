@@ -1,13 +1,13 @@
 <div class="container">
-    <form [formGroup]="createDeptForm" (ngSubmit)="onSubmit(createDeptForm.value)">
+    <form #createDeptForm="ngForm" (ngSubmit)="onSubmit(createDeptForm.value)">
         <div>
             <label for="dept_name">
                 Department
             </label>
             <br>
-            <input id="dept_name" type="text" formControlName="dept_name" placeholder="Enter name">
+            <input name="dept_name" [(ngModel)]="dept.dept_name" type="text" placeholder="Enter name" required>
         </div>
         <br>
-        <button class="btn btn-primary" type="submit">Create</button>
+        <button [disabled]="!createDeptForm.valid" class="btn btn-primary" type="submit">Create</button>
     </form>
 </div>
