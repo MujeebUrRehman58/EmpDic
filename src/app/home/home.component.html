@@ -1,19 +1,50 @@
 <div class="container">
+  <form [formGroup]="searchEmpForm" (ngSubmit)="onSubmit(searchEmpForm.value)">
+    <div class="form-group row">
+      <label for="dept_name" class="col-sm-1 col-form-label">Department</label>
+      <div class="col-sm-2">
+        <select id="dept_name" formControlName="dept_name" class="form-control">
+          <option selected>All</option>
+          <option *ngFor="let dept of depts">{{ dept.dept_name }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="full_name" class="col-sm-1 col-form-label">Name</label>
+      <div class="col-sm-2">
+        <input id="full_name" type="text" formControlName="full_name" class="form-control">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="email" class="col-sm-1 col-form-label">Email</label>
+      <div class="col-sm-2">
+        <input type="text" formControlName="email" class="form-control">
+      </div>
+    </div>
+    <input class="btn btn-success" name="seach" type="submit" value="Search">
+  </form>
+</div>
+
+<div class="container">
   <table class="table table-hover">
     <thead>
       <tr>
         <th>Name</th>
         <th>Title</th>
+        <th>Department</th>
+        <th>Cell Phone</th>
         <th>Email</th>
-        <th>Address</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let emp of emps" (ng-click)="go(emp.id)" style="cursor: pointer;">
+      <tr *ngFor="let emp of emps" [routerLink]="['/emp-details/', emp.user]" style="cursor: pointer;">
         <td>{{ emp.full_name }}</td>
         <td>{{ emp.title }}</td>
+        <ng-container *ngFor="let dept of depts">
+          <td *ngIf="dept.id == emp.dept ">{{ dept.dept_name }}</td>
+        </ng-container>
+        <td>{{ emp.cell_phone }}</td>
         <td>{{ emp.email }}</td>
-        <td>{{ emp.address }}</td>
       </tr>
     </tbody>
   </table>

@@ -10,11 +10,16 @@ import { ActivatedRoute} from '@angular/router';
 })
 export class EmpDetailsComponent implements OnInit {
   emp : any;
+  users: any;
+  depts: any;
   id : any;
   constructor(private dataService: DataService,
     private route: ActivatedRoute,
     ) {
     this.id = this.route.snapshot.paramMap.get('id');
+    this.dataService.getdepts().then((d)=>{
+      this.depts = d
+    })
    }
 
   ngOnInit() {

@@ -17,14 +17,14 @@ export class DataService {
     this.http.patch("http://127.0.0.1:8000/api/users/" + id + '/', username).subscribe((res: Response) => {console.log(res);})
   }
   async getemps(){
-    return await this.http.get("http://127.0.0.1:8000/api/employees").toPromise();
+    return await this.http.get("http://127.0.0.1:8000/api/employees/").toPromise();
   }
   async getempbyid(id){
     return await this.http.get("http://127.0.0.1:8000/api/employees/" + id + '/').toPromise();
   }
 
   async getdepts(){
-    return await this.http.get("http://127.0.0.1:8000/api/departments").toPromise();
+    return await this.http.get("http://127.0.0.1:8000/api/departments/").toPromise();
   }
 
   async getdeptbyid(id){
@@ -32,23 +32,23 @@ export class DataService {
   }
 
   postdept(name){
-    this.http.post("http://127.0.0.1:8000/api/departments/", name).subscribe((res: Response) => {console.log(res);})
+    return this.http.post("http://127.0.0.1:8000/api/departments/", name)
   }
   
   patchdept(id, name){
-    this.http.patch("http://127.0.0.1:8000/api/departments/" + id + '/', name).subscribe((res: Response) => {console.log(res);})
+    return this.http.patch("http://127.0.0.1:8000/api/departments/" + id + '/', name)
   }
   
   patchemp(id, data){
-    this.http.patch("http://127.0.0.1:8000/api/employees/" + id + '/', data).subscribe((res: Response) => {console.log(res);})
+    return this.http.patch("http://127.0.0.1:8000/api/employees/" + id + '/', data)
   }
 
   deletedept(id){
-    return this.http.delete("http://127.0.0.1:8000/api/departments/" + id + '/').subscribe((res: Response) => {console.log(res);})
+    return this.http.delete("http://127.0.0.1:8000/api/departments/" + id + '/')
   }
 
   deleteemp(id){
-    return this.http.delete("http://127.0.0.1:8000/api/employees/" + id + '/').subscribe((res: Response) => {console.log(res);})
+    return this.http.delete("http://127.0.0.1:8000/api/employees/" + id + '/')
   }
   set_manofmonth(){
     return this.http.get("http://127.0.0.1:8000/api/employees/set_manofmonth/").subscribe((res: Response) => {console.log(res);})
@@ -61,9 +61,18 @@ export class DataService {
     return this.http.post("http://127.0.0.1:8000/api/departments/getdeptbyname/", data)
   }
   postemp(data){
-    return this.http.post("http://127.0.0.1:8000/api/employees/", data).subscribe((res: Response) => {console.log(res);})
+    return this.http.post("http://127.0.0.1:8000/api/employees/", data)
   }
   postuser(data){
     return this.http.post("http://127.0.0.1:8000/api/users/", data)
+  }
+  searchemp(data){
+    return this.http.post("http://127.0.0.1:8000/api/employees/searchemp/", data)
+  }
+  searchmem(data){
+    return this.http.post("http://127.0.0.1:8000/api/employees/searchmem/", data)
+  }
+  loginuser(data){
+      return this.http.post("http://127.0.0.1:8000/auth/", data)
   }
 }

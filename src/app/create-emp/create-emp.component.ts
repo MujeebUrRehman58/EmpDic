@@ -65,22 +65,24 @@ export class CreateEmpComponent implements OnInit {
       this.dataService.postuser({ 'username': value.username, 'password': value.password }).subscribe((res: Response) => {
         console.log(res);
         this.id = res['id']
+        delete value['username']
+        delete value['password']
+        delete value['password1']
+        value['user'] = this.id
         if (this.fileToUpload) {
           const formData: FormData = new FormData();
           formData.append('profile', this.fileToUpload, this.fileToUpload.name);
-          delete value['username']
-          delete value['password']
-          delete value['password1']
-          value['user'] = this.id
-          console.log(value)
-          this.dataService.postemp(value)
-          this.dataService.patchemp(this.id, formData)
-          this.router.navigate(['/administration'])
+          this.dataService.postemp(value).subscribe((res: Response) => {
+            this.dataService.patchemp(this.id, formData).subscribe((res: Response) => {
+              this.router.navigate(['/members'])
+            })
+          })
         }
         else {
           console.log(value)
-          this.dataService.postemp(value)
-          //this.router.navigate(['/administration'])
+          this.dataService.postemp(value).subscribe((res: Response) => {
+            this.router.navigate(['/members'])
+          })
         }
       })
     })

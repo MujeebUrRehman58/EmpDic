@@ -16,8 +16,10 @@ export class CreateDeptComponent implements OnInit {
     ) {
   }
   onSubmit(name) {
-    this.dataService.postdept(name);
-    this.router.navigate(['/administration'])
+    this.dataService.postdept(name).subscribe((res: Response) => {
+      console.log(res);
+      this.router.navigate(['/departments/'])
+    })
   }
   ngOnInit() {
   }

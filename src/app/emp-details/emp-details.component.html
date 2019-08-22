@@ -16,7 +16,9 @@
             </tr>
             <tr>
                 <th scope="row">Department</th>
-                <td>{{ emp.dept }}</td>
+                <ng-container *ngFor="let dept of depts">
+                    <td *ngIf="dept.id == emp.dept ">{{ dept.dept_name }}</td>
+                </ng-container>
             </tr>
             <tr>
                 <th scope="row">Email</th>

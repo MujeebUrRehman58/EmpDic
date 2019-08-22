@@ -1,20 +1,51 @@
 <div class="container">
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th>Username</th>
-              <th>Name</th>
-              <th>Level</th>
-              <th>Man of the Month</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let mem of mems" (ng-click)="go(mem.id)" style="cursor: pointer;">
-              <td>{{ mem.user }}</td>
-              <td>{{ mem.full_name }}</td>
-              <td>{{ mem.level }}</td>
-              <td>{{ mem.manOfMonth }}</td>
-            </tr>
-          </tbody>
-        </table>
+  <h1>Members<a href="create-emp"><i class="material-icons align-middle"
+        style="font-size:35px;color:red;">add</i></a></h1>
+  <form [formGroup]="searchMemForm" (ngSubmit)="onSubmit(searchMemForm.value)">
+    <div class="form-group row">
+      <label for="username" class="col-sm-1 col-form-label">Username</label>
+      <div class="col-sm-2">
+        <input id="username" type="text" formControlName="username" class="form-control">
       </div>
+    </div>
+    <div class="form-group row">
+      <label for="full_name" class="col-sm-1 col-form-label">Name</label>
+      <div class="col-sm-2">
+        <input id="full_name" type="text" formControlName="full_name" class="form-control">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="manOfMonth" class="col-sm-1 col-form-label">Man of month</label>
+      <div class="col-sm-2">
+        <select id="manOfMonth" formControlName="manOfMonth" class="form-control">
+          <option selected>All</option>
+          <option *ngFor="let option of options">{{ option }}</option>
+        </select>
+      </div>
+    </div>
+    <input class="btn btn-success" name="seach" type="submit" value="Search">
+  </form>
+</div>
+<div class="container">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Name</th>
+        <th>Level</th>
+        <th>Man of the Month</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let mem of mems" [routerLink]="['/edit-emp/', mem.user]" style="cursor: pointer;">
+        <ng-container *ngFor="let user of users">
+          <td *ngIf="user.id == mem.user ">{{ user.username }}</td>
+        </ng-container>
+        <td>{{ mem.full_name }}</td>
+        <td>{{ mem.level }}</td>
+        <td *ngIf="mem.manOfMonth == true">Yes</td>
+        <td *ngIf="mem.manOfMonth == false">No</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

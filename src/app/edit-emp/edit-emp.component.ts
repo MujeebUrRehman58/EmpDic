@@ -61,11 +61,12 @@ export class EditEmpComponent implements OnInit {
   onSubmit(value) {
     //console.log(value)
     if (value == 'cancel') {
-      this.router.navigate(['/administration'])
+      this.router.navigate(['/members'])
     }
     else if (value == 'delete') {
-      this.dataService.deleteemp(this.id);
-      this.router.navigate(['/administration'])
+      this.dataService.deleteemp(this.id).subscribe((res: Response) => {
+        this.router.navigate(['/members'])
+      })
     } 
     else {
       this.dataService.getdeptbyname({'dept_name':value.dept}).subscribe((res: Response) => {
@@ -73,16 +74,20 @@ export class EditEmpComponent implements OnInit {
         if (this.mem.manOfMonth)
           this.dataService.set_manofmonth()
         this.dataService.patchuser(this.id, { 'username': value.username })
+        
         if (this.fileToUpload){
           const formData: FormData = new FormData();
           formData.append('profile', this.fileToUpload, this.fileToUpload.name);
-          this.dataService.patchemp(this.id, formData)
-          this.dataService.patchemp(this.id, value)
-          this.router.navigate(['/administration'])  
+          this.dataService.patchemp(this.id, value).subscribe((res: Response) => {
+            this.dataService.patchemp(this.id, formData).subscribe((res: Response) => {
+              this.router.navigate(['/members'])  
+            })
+          })
         }
         else
-          this.dataService.patchemp(this.id, value)
-          this.router.navigate(['/administration'])  
+          this.dataService.patchemp(this.id, value).subscribe((res: Response) => {
+            this.router.navigate(['/members']) 
+          })
       })
     }
   }

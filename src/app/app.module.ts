@@ -15,6 +15,7 @@ import { EditDeptComponent } from './edit-dept/edit-dept.component';
 import { CreateDeptComponent } from './create-dept/create-dept.component';
 import { CreateEmpComponent } from './create-emp/create-emp.component';
 import { EditEmpComponent } from './edit-emp/edit-emp.component';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { EditEmpComponent } from './edit-emp/edit-emp.component';
     CreateDeptComponent,
     CreateEmpComponent,
     EditEmpComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,11 +48,14 @@ import { EditEmpComponent } from './edit-emp/edit-emp.component';
       { path: 'edit-emp/:id', component: EditEmpComponent },
       { path: 'create-dept', component: CreateDeptComponent },
       { path: 'create-emp', component: CreateEmpComponent },
+      { path: 'login', component: LoginComponent },
       { path: '', redirectTo: '/home', pathMatch: 'full' },
     ]),
 
   ],
-  providers: [],
+  providers: [
+    
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
