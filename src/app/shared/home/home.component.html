@@ -1,0 +1,70 @@
+<div class="container">
+<table class="table table-borderless">
+  <thead>
+		<tr>
+			<th scope="col">Man of the Month</th>
+			<th scope="col">Search</th>
+		</tr>
+	</thead>
+  <tbody>
+    <tr>
+      <td>
+        <div *ngIf="manOfMonth.profile" class="col-sm-4">
+          <img src="{{ manOfMonth.profile }}">
+        </div>
+      </td>
+      <td>
+        <form [formGroup]="searchEmployeeForm" (ngSubmit)="onSubmit(searchEmployeeForm.value)">
+          <div class="form-group row">
+            <label for="department_name" class="col-sm-2 col-form-label">Department</label>
+            <div class="col-sm-2">
+              <select id="department_name" formControlName="department_name" class="form-control">
+                <option selected>All</option>
+                <option *ngFor="let department of departments">{{ department.department_name }}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="full_name" class="col-sm-2 col-form-label">Name</label>
+            <div class="col-sm-2">
+              <input id="full_name" type="text" formControlName="full_name" class="form-control">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="email" class="col-sm-2 col-form-label">Email</label>
+            <div class="col-sm-2">
+              <input type="text" formControlName="email" class="form-control">
+            </div>
+          </div>
+          <input class="btn btn-success" [disabled]="searchEmployeeForm.pristine" name="seach" type="submit" value="Search">
+        </form>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="container">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Title</th>
+        <th>Department</th>
+        <th>Cell Phone</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let employee of employees" [routerLink]="['/emp-details/', employee.user_id]" style="cursor: pointer;">
+        <td>{{ employee.full_name }}</td>
+        <td>{{ employee.title }}</td>
+        <ng-container *ngFor="let department of departments">
+          <td *ngIf="department.id == employee.department_id ">{{ department.department_name }}</td>
+        </ng-container>
+        <td>{{ employee.cell_phone }}</td>
+        <td>{{ employee.email }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

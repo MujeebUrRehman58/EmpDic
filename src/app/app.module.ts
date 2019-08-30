@@ -1,21 +1,24 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './app.component';
-import { DepartmentsComponent } from './departments/departments.component';
-import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { AdministrationComponent } from './administration/administration.component';
-import { EmpDetailsComponent } from './emp-details/emp-details.component';
-import { MembersComponent } from './members/members.component';
-import { EditDeptComponent } from './edit-dept/edit-dept.component';
-import { CreateDeptComponent } from './create-dept/create-dept.component';
-import { CreateEmpComponent } from './create-emp/create-emp.component';
-import { EditEmpComponent } from './edit-emp/edit-emp.component';
+import { DepartmentsComponent } from './admin/departments/department-list/departments.component';
+import { HomeComponent } from './shared/home/home.component';
+import { AdministrationComponent } from './admin/administration/administration.component';
+import { EmployeeDetailsComponent } from './shared/employee-details/employee-details.component';
+import { MembersComponent } from './admin/members/members-list/members.component';
+import { EditDepartmentComponent } from './admin/departments/edit-department/edit-department.component';
+import { CreateDepartmentComponent } from './admin/departments/create-department/create-department.component';
+import { CreateMemberComponent } from './admin/members/create-member/create-member.component';
+import { EditMemberComponent } from './admin/members/edit-member/edit-member.component';
 import { LoginComponent } from './login/login.component';
+import { AuthInterceptor } from './auth/auth.interceptor'
+import { AuthService } from './auth/auth.services'
+import { ErrorInterceptor } from './auth/error.interceptor'
 
 
 @NgModule({
@@ -24,12 +27,12 @@ import { LoginComponent } from './login/login.component';
     DepartmentsComponent,
     HomeComponent,
     AdministrationComponent,
-    EmpDetailsComponent,
+    EmployeeDetailsComponent,
     MembersComponent,
-    EditDeptComponent,
-    CreateDeptComponent,
-    CreateEmpComponent,
-    EditEmpComponent,
+    EditDepartmentComponent,
+    CreateDepartmentComponent,
+    CreateMemberComponent,
+    EditMemberComponent,
     LoginComponent,
   ],
   imports: [
@@ -38,23 +41,19 @@ import { LoginComponent } from './login/login.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot([
-      { path: 'home', component: HomeComponent },
-      { path: 'administration', component: AdministrationComponent },
-      { path: 'emp-details/:id', component: EmpDetailsComponent },
-      { path: 'members', component: MembersComponent },
-      { path: 'departments', component: DepartmentsComponent },
-      { path: 'edit-dept/:id', component: EditDeptComponent },
-      { path: 'edit-emp/:id', component: EditEmpComponent },
-      { path: 'create-dept', component: CreateDeptComponent },
-      { path: 'create-emp', component: CreateEmpComponent },
-      { path: 'login', component: LoginComponent },
-      { path: '', redirectTo: '/home', pathMatch: 'full' },
-    ]),
-
   ],
   providers: [
-    
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
+    },
   ],
   bootstrap: [AppComponent]
 })

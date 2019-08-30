@@ -1,0 +1,46 @@
+<div class="container" *ngIf=employee>
+    <h2>Employee</h2>
+    <table class="table">
+        <tbody>
+            <tr>
+                <th scope="row">Emp #</th>
+                <td>{{ employee.user_id }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Name</th>
+                <td>{{ employee.full_name }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Title</th>
+                <td>{{ employee.title }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Department</th>
+                <ng-container *ngFor="let department of departments">
+                    <td *ngIf="department.id == employee.department_id ">{{ department.department_name }}</td>
+                </ng-container>
+            </tr>
+            <tr>
+                <th scope="row">Email</th>
+                <td>{{ employee.email }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Work Phone</th>
+                <td>{{ employee.work_phone }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Phone</th>
+                <td>{{ employee.cell_phone }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Address</th>
+                <td>{{ employee.address }}</td>
+            </tr>
+            <tr>
+                <th scope="row">Profile</th>
+                <td *ngIf="employee.profile"><img src="{{ employee.profile }}" class="img-fluid"></td>
+                <td *ngIf="!employee.profile">Profile not available</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

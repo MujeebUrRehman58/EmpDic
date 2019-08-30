@@ -1,0 +1,24 @@
+<div class="container">
+    <div *ngIf="error" style="color: red">
+        {{error}}
+    </div>
+    <form #editDeptForm="ngForm" (ngSubmit)="onSubmit(editDeptForm.value)">
+        <label for="department_name">
+            Department
+        </label>
+        <br>
+        <input name="department_name" type="text" (blur)="doesDepartmentExist()" [(ngModel)]='department.department_name' pattern="{{ regx }}" required>
+        <br><br>
+        <div class="form-row">
+            <div class="form-group col-md-1">
+                <button [disabled]="!editDeptForm.valid || error || editDeptForm.pristine" class="btn btn-primary" type="submit">Update</button>
+            </div>
+            <div class="form-group col-md-1">
+                <button class="btn btn-primary" (click)="onSubmit('delete')" type="button">Delete</button>
+            </div>
+            <div class="form-group col-md-1">
+                <button class="btn btn-primary" (click)="onSubmit('cancel')" type="button">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>

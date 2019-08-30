@@ -1,0 +1,122 @@
+<div class="container">
+    <div *ngIf="serverError" style="color: red">
+        {{ serverError }}
+    </div>
+    <form #editMemberForm="ngForm" (ngSubmit)="onSubmit(editMemberForm.value)">
+        <label for="full_name">Full name</label>
+        <br>
+        <input name="full_name" #fullName="ngModel" type="text" [(ngModel)]='member.full_name' pattern="{{ name_regx }}" required>
+        <br>
+        <div style="color: red" *ngIf="fullName.invalid && (fullName.dirty || fullName.touched)">
+            <div *ngIf="fullName.errors.required">
+                Name is required.
+            </div>
+        </div>
+        <label for="username">Username</label>
+        <br>
+        <input name="username" #username="ngModel" type="text" (blur)="DoesUsernameExist()" [(ngModel)]='user.username' required>
+        <br>
+        <div style="color: red" *ngIf="username.invalid && (username.dirty || username.touched)">
+            <div *ngIf="username.errors.required">
+                Username is required.
+            </div>
+        </div>
+        <div *ngIf="usernameError" style="color: red">
+            {{usernameError}}
+        </div>
+        <label for="title">Title</label>
+        <br>
+        <select name="title" [(ngModel)]='member.title'>
+            <option *ngFor="let title of titles">{{ title }}</option>
+        </select>
+        <br> 
+        <label for="level">Level</label>
+        <br>
+        <select name="level" [(ngModel)]='member.level'>
+            <option *ngFor="let level of levels">{{ level }}</option>
+        </select>
+        <br>
+        <label for="department_id">Department</label>
+        <br>
+        <select name="department_id" [(ngModel)]='department.id' required>
+            <!-- <option [ngValue]="department.department_name" disabled>Select option</option> -->
+            <option *ngFor="let d of departments" [ngValue]="d.id">{{ d.department_name }}</option>
+        </select>
+        <br>
+        <label for="address">Address</label>
+        <br>
+        <input name="address" #address="ngModel" type="text" [(ngModel)]='member.address' required>
+        <br>
+        <div style="color: red" *ngIf="address.invalid && (address.dirty || address.touched)">
+            <div *ngIf="address.errors.required">
+                Address is required.
+            </div>
+        </div>
+        <label for="email">Email</label>
+        <br>
+        <input name="email" #email="ngModel" type="email" [(ngModel)]='member.email' pattern="{{ emailRegx }}" required>
+        <br>
+        <div style="color: red" *ngIf="email.invalid && (email.dirty || email.touched)">
+            <div *ngIf="email.errors.required">
+                Email is required.
+            </div>
+            <div *ngIf="email.errors.pattern">
+                Invalid email address.
+            </div>
+        </div>
+        <label for="work_phone">Work phone</label>
+        <br>
+        <input name="work_phone" #work_phone="ngModel" type="tel" [(ngModel)]='member.work_phone' pattern="{{ phoneRegx }}" required>
+        <br>
+        <div style="color: red" *ngIf="work_phone.invalid && (work_phone.dirty || work_phone.touched)">
+            <div *ngIf="work_phone.errors.required">
+                Work phone is required.
+            </div>
+            <div *ngIf="work_phone.errors.pattern">
+                Invalid Work phone.
+            </div>
+        </div>
+        <label for="home_phone">Home phone</label>
+        <br>
+        <input name="home_phone" #home_phone="ngModel" type="tel" [(ngModel)]='member.home_phone' pattern="{{ phoneRegx }}" required>
+        <br>
+        <div style="color: red" *ngIf="home_phone.invalid && (home_phone.dirty || home_phone.touched)">
+            <div *ngIf="home_phone.errors.required">
+                Home phone is required.
+            </div>
+            <div *ngIf="home_phone.errors.pattern">
+                Invalid Home phone.
+            </div>
+        </div>
+        <label for="cell_phone">Cell phone</label>
+        <br>
+        <input name="cell_phone" #cell_phone="ngModel" type="tel" [(ngModel)]='member.cell_phone' pattern="{{ phoneRegx }}" required>
+        <br>
+        <div style="color: red" *ngIf="cell_phone.invalid && (cell_phone.dirty || cell_phone.touched)">
+            <div *ngIf="cell_phone.errors.required">
+                Cell phone is required.
+            </div>
+            <div *ngIf="cell_phone.errors.pattern">
+                Invalid Cell phone.
+            </div>
+        </div>
+        <label for="man_of_month">Man of month</label>
+        <input type="checkbox" name='man_of_month' [checked]="member.man_of_month" [(ngModel)]="member.man_of_month" />
+        <br>
+        <label for="profile">Profile(optional)</label>
+        <img src="{{ member.profile }}" height="30">
+        <input name="profile" accept=".png, .jpg, .jpeg" type="file" (change)="handleFileInput($event.target.files, editMemberForm)" />
+        <br><br>
+        <div class="form-row">
+            <div class="form-group col-md-1">
+                <button [disabled]="!editMemberForm.valid || error || !editMemberForm.dirty" class="btn btn-primary" type="submit">Update</button>
+            </div>
+            <div class="form-group col-md-1">
+                <button class="btn btn-primary" (click)="onSubmit('delete')" type="button" >Delete</button>
+            </div>
+            <div class="form-group col-md-1">
+                <button class="btn btn-primary" (click)="onSubmit('cancel')" type="button">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>
