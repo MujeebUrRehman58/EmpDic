@@ -14,7 +14,7 @@ import { Department } from '../../../models/department'
 })
 
 export class CreateMemberComponent implements OnInit {
-  phoneRegx = '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$';
+  phoneRegx = '^[+]*[0-9]{10,15}$';
   emailRegx = '^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$';
   levels = ['Admin', 'Employee'];
   titles = ['Director', 'Sr. Developer', 'Jr. Developer', 'Software Engineer', 'Intern'];
@@ -68,7 +68,7 @@ export class CreateMemberComponent implements OnInit {
   onSubmit(value) {
     value['department_id'] = value.department_id['id'];
     this.employeeDataService.postEmployee(value).subscribe((employee) => {
-      this.id = employee['user_id'];
+      this.id = employee['id'];
       if (this.fileToUpload) {
         const formData: FormData = new FormData();
         formData.append('profile', this.fileToUpload, this.fileToUpload.name);

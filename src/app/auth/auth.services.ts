@@ -2,20 +2,20 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router'
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Employee } from '../models/employee'
+import { User } from '../models/user';
 
 
 @Injectable()
 export class AuthService {
     level: string;
-    public employeeSubject: BehaviorSubject<Employee>;
-    private employee: Observable<Employee>;
+    public userSubject: BehaviorSubject<User>;
+    private user: Observable<User>;
 
     constructor(
         private router: Router,
     ){
-        this.employeeSubject = new BehaviorSubject<Employee>(JSON.parse(localStorage.getItem('currentEmployee')));
-        this.employee = this.employeeSubject.asObservable();
+        this.userSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+        this.user = this.userSubject.asObservable();
     }
 
     public loggedIn(){
@@ -29,11 +29,11 @@ export class AuthService {
     public logoutUser(){
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
-        localStorage.removeItem('currentEmployee')
+        localStorage.removeItem('currentUser');
         this.router.navigate(['/login']);
     }
 
     public isAdmin() {
-        return this.employee;
+        return this.user;
     }
 }

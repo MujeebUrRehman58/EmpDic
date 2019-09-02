@@ -7,7 +7,6 @@ export class Employee {
     full_name: string;
     email: string;
     title: string;
-    level: string;
     address: string;
     work_phone: string;
     home_phone: string;

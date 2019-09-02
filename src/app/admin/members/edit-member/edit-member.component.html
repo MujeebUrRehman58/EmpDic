@@ -32,8 +32,9 @@
         <br> 
         <label for="level">Level</label>
         <br>
-        <select name="level" [(ngModel)]='member.level'>
-            <option *ngFor="let level of levels">{{ level }}</option>
+        <select name="level" [(ngModel)]='user.is_admin'>
+            <option [ngValue]="true" [selected]="user.is_admin">Admin</option>
+            <option [ngValue]="false" [selected]="!user.is_admin">Employee</option>
         </select>
         <br>
         <label for="department_id">Department</label>

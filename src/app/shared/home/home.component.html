@@ -9,8 +9,11 @@
   <tbody>
     <tr>
       <td>
-        <div *ngIf="manOfMonth.profile" class="col-sm-4">
+        <div *ngIf="manOfMonth" class="col-sm-4">
           <img src="{{ manOfMonth.profile }}">
+        </div>
+        <div *ngIf="!manOfMonth" class="col-sm-4">
+          Man of the month is not set.
         </div>
       </td>
       <td>
@@ -51,18 +54,18 @@
         <th>Name</th>
         <th>Title</th>
         <th>Department</th>
-        <th>Cell Phone</th>
+        <th>Work Phone</th>
         <th>Email</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let employee of employees" [routerLink]="['/emp-details/', employee.user_id]" style="cursor: pointer;">
+      <tr *ngFor="let employee of employees" [routerLink]="['/emp-details/', employee.id]" style="cursor: pointer;">
         <td>{{ employee.full_name }}</td>
         <td>{{ employee.title }}</td>
         <ng-container *ngFor="let department of departments">
           <td *ngIf="department.id == employee.department_id ">{{ department.department_name }}</td>
         </ng-container>
-        <td>{{ employee.cell_phone }}</td>
+        <td>{{ employee.work_phone }}</td>
         <td>{{ employee.email }}</td>
       </tr>
     </tbody>

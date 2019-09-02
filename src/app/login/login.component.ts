@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { UserDataService } from '../dataService/user.data.service';
 import { EmployeeDataService } from '../dataService/employee.data.service'
 import { AuthService } from '../auth/auth.services';
-import { Employee } from '../models/employee';
+import { User } from '../models/user';
 
 @Component({
   selector: 'app-login',
@@ -39,9 +39,9 @@ export class LoginComponent implements OnInit {
       const decodedJwtJsonData = window.atob(jwtdata);
       const decodedJwtData = JSON.parse(decodedJwtJsonData);
       const id = decodedJwtData.user_id;
-      this.employeeDataService.getEmploeeById(id).subscribe((e: Employee) => {
-        localStorage.setItem('currentEmployee', JSON.stringify(e));
-        this.auth.employeeSubject.next(JSON.parse(localStorage.getItem('currentEmployee')));
+      this.userDataService.getUserById(id).subscribe((u: User) => {
+        localStorage.setItem('currentUser', JSON.stringify(u));
+        this.auth.userSubject.next(JSON.parse(localStorage.getItem('currentUser')));
       });
       this.error = null;
       this.router.navigate(['/home']);

@@ -31,7 +31,7 @@ export class MembersComponent implements OnInit {
     this.userDataService.getUsers().subscribe((u: [User]) => {
       this.users = u;
       this.employeeDataService.getEmployees().subscribe((e: [Employee]) => this.members = e);
-    })
+    });
   }
 
   onSubmit(value) {

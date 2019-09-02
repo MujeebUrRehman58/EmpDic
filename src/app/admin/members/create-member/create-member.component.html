@@ -52,7 +52,7 @@
         <br>
         <label for="level">Level</label>
         <br>
-        <select name="level" [(ngModel)]='employee.level' required>
+        <select name="level" [(ngModel)]='user.is_admin' required>
             <!--<option [ngValue]="employee.level" disabled>Select option</option>-->
             <option *ngFor="let level of levels" [ngValue]="level">{{ level }}</option>
         </select>

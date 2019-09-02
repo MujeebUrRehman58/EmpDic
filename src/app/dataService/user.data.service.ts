@@ -26,15 +26,15 @@ export class UserDataService {
   }
 
   patchUser(id, data){
-    return this.http.patch(this.urlPrefix + id + '/', data)
+    return this.http.patch(this.urlPrefix + id + '/', data);
   }
 
   postUser(data){
-    return this.http.post(this.urlPrefix, data)
+    return this.http.post(this.urlPrefix, data);
   }
 
   loginUser(data){
-    return this.http.post(environment.baseUrl + 'token/', data)
+    return this.http.post(environment.baseUrl + 'token/', data);
   }
 
   doesUserExist(data){

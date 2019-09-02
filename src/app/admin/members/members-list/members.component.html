@@ -3,19 +3,19 @@
         style="font-size:35px;color:red;">add</i></a></h1>
   <form [formGroup]="searchMemberForm" (ngSubmit)="onSubmit(searchMemberForm.value)">
     <div class="form-group row">
-      <label for="username" class="col-sm-1 col-form-label">Username</label>
+      <label for="username" class="col-sm-2 col-form-label">Username</label>
       <div class="col-sm-2">
         <input id="username" type="text" formControlName="username" class="form-control">
       </div>
     </div>
     <div class="form-group row">
-      <label for="full_name" class="col-sm-1 col-form-label">Name</label>
+      <label for="full_name" class="col-sm-2 col-form-label">Name</label>
       <div class="col-sm-2">
         <input id="full_name" type="text" formControlName="full_name" class="form-control">
       </div>
     </div>
     <div class="form-group row">
-      <label for="man_of_month" class="col-sm-1 col-form-label">Man of month</label>
+      <label for="man_of_month" class="col-sm-2 col-form-label">Man of month</label>
       <div class="col-sm-2">
         <select id="man_of_month" formControlName="man_of_month" class="form-control">
           <option selected>All</option>
@@ -37,14 +37,17 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let member of members" [routerLink]="['/edit-emp/', member.user_id]" style="cursor: pointer;">
+      <tr *ngFor="let member of members" [routerLink]="['/edit-emp/', member.id]" style="cursor: pointer;">
         <ng-container *ngFor="let user of users">
           <td *ngIf="user.id == member.user_id ">{{ user.username }}</td>
         </ng-container>
         <td>{{ member.full_name }}</td>
-        <td>{{ member.level }}</td>
-        <td *ngIf="member.man_of_month == true">Yes</td>
-        <td *ngIf="member.man_of_month == false">No</td>
+        <ng-container *ngFor="let user of users">
+          <td *ngIf="user.id == member.user_id && user.is_admin">Admin</td>
+          <td *ngIf="user.id == member.user_id && !user.is_admin"></td>
+        </ng-container>
+        <td *ngIf="member.man_of_month">Yes</td>
+        <td *ngIf="!member.man_of_month">No</td>
       </tr>
     </tbody>
   </table>

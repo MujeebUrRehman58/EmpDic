@@ -15,16 +15,15 @@ import { NgForm } from '@angular/forms';
 })
 
 export class EditMemberComponent implements OnInit {
-  phoneRegx = '^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$';
+  phoneRegx = '^[+]*[0-9]{10,15}$';
   emailRegx = '^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$';
-  levels = ['Admin', 'Employee'];
   titles = ['Director', 'Sr. Developer', 'Jr. Developer', 'Software Engineer', 'Intern'];
   fileToUpload: File = null;
   id: string;
   member: Employee = new Employee();
   user: User = new User();
   department: Department = new Department();
-  departments: [Department] = null;;
+  departments: [Department] = null;
   usernameError: string;
   serverError: string;
 
@@ -45,14 +44,14 @@ export class EditMemberComponent implements OnInit {
       this.member = e;
       this.departmentDataService.getDepartmentById(this.member.department_id).subscribe((d: Department) => {
         this.department = d;
+        this.userDataService.getUserById(e.user_id).subscribe((u: User) => {
+          this.user = u;
+        });
       });
-    });
-    this.userDataService.getUserById(this.id).subscribe((u: User) => {
-      this.user = u;
     });
   }
   DoesUsernameExist() {
-    this.userDataService.doesUserExist({ 'username': this.user.username, 'id': this.id }).subscribe((u: [User]) => {
+    this.userDataService.doesUserExist({ 'username': this.user.username, 'id': this.member.user_id }).subscribe((u: [User]) => {
       if (u.length < 1){
         this.usernameError = null;
       } else {
@@ -63,7 +62,7 @@ export class EditMemberComponent implements OnInit {
 
   handleFileInput(files: FileList, form: NgForm) {
     this.fileToUpload = files.item(0);
-    form.controls.level.markAsDirty();
+    form.controls.address.markAsDirty();
   }
 
   onSubmit(value) {
@@ -71,21 +70,18 @@ export class EditMemberComponent implements OnInit {
       this.router.navigate(['/members']);
     } else if (value === 'delete') {
       if (confirm('Are you sure you want to delete this member?')) {
-        this.userDataService.deleteUser(this.id).subscribe(() => {
+        this.userDataService.deleteUser(this.member.user_id).subscribe(() => {
           this.router.navigate(['/members']);
         });
       } else {
         return;
       }
     } else {
-      value['user_id'] = this.id;
-      console.log(value.user_id, value.man_of_month);
       this.employeeDataService.putEmployee(this.id, value).subscribe((e: Employee) => {
-        console.log('updated', e);
         if (this.fileToUpload) {
           const formData: FormData = new FormData();
           formData.append('profile', this.fileToUpload, this.fileToUpload.name);
-          this.employeeDataService.patchEmployee(this.id, formData).subscribe((e: Employee) => {
+          this.employeeDataService.patchEmployee(this.id, formData).subscribe(() => {
             this.router.navigate(['/members']);
           });
         } else {

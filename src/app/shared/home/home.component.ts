@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
       this.employees = e;
       this.departmentDataService.getDepartments().subscribe((d: [Department]) => {
         this.departments = d;
-        this.employeeDataService.searchManOfMonth({'man_of_month': true}).subscribe((man: [Employee]) => {
+        this.employeeDataService.searchManOfMonth({ 'man_of_month': true }).subscribe((man: [Employee]) => {
           if (man.length < 1) {
             this.manOfMonth = null;
           } else {
